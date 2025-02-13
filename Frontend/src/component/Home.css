@@ -1,0 +1,81 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  max-width: 500px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.upload-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.webcam-container {
+  position: relative;
+}
+
+.webcam {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.preview-image {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.placeholder {
+  background: #ddd;
+  padding: 40px;
+  border-radius: 10px;
+  color: #777;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+button, .upload-button {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover, .upload-button:hover {
+  background: #0056b3;
+}
+
+.capture-button {
+  background: #28a745;
+}
+
+.capture-button:hover {
+  background: #218838;
+}
+
+.upload-input {
+  display: none;
+}
+
+.prediction-result {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
