@@ -7,6 +7,7 @@ function Home() {
     const [image, setImage] = useState(null);
     const [isCameraOpen, setIsCameraOpen] = useState(false);
     const [prediction, setPrediction] = useState(null);
+    const [fodmap, setFodmap] = useState(null);
     const webcamRef = useRef(null);
 
     const handleUpload = (event) => {
@@ -29,7 +30,8 @@ function Home() {
         if (!image) return alert("กรุณาอัปโหลดหรือถ่ายรูปก่อน!");
         try {
             const result = await predictImage(image);
-            setPrediction(`ผลลัพธ์: ${result.prediction}`);
+            setPrediction(result.prediction);
+            setFodmap(result.fodmap);
         } catch (error) {
             console.error("Error during prediction:", error);
         }
@@ -37,25 +39,36 @@ function Home() {
 
     return (
         <div className="app">
-            <div className="upload-container">
-                {isCameraOpen ? (
+            <h2 className="title">🍏 AI ตรวจสอบ FODMAP</h2>
+            <div className="upload-section">
+                {!image ? (
+                    <div className="upload-options">
+                        <input type="file" accept="image/*" id="upload-input" onChange={handleUpload} />
+                        <label htmlFor="upload-input" className="upload-button">📤 อัปโหลดรูป</label>
+                        <button className="camera-button" onClick={() => setIsCameraOpen(true)}>📷 เปิดกล้อง</button>
+                    </div>
+                ) : (
+                    <img src={image} alt="Uploaded preview" className="preview-image" />
+                )}
+
+                {isCameraOpen && (
                     <div className="webcam-container">
                         <Webcam ref={webcamRef} screenshotFormat="image/jpeg" className="webcam" />
                         <button className="capture-button" onClick={capturePhoto}>📸 ถ่ายรูป</button>
                     </div>
-                ) : image ? (
-                    <img src={image} alt="Preview" className="preview-image" />
-                ) : (
-                    <div className="placeholder">🖼 ไม่มีรูปภาพ</div>
                 )}
             </div>
-            <div className="button-container">
-                <input type="file" accept="image/*" id="upload-input" className="upload-input" onChange={handleUpload} />
-                <label htmlFor="upload-input" className="upload-button">📤 อัปโหลดรูปภาพ</label>
-                <button className="camera-button" onClick={() => setIsCameraOpen(true)}>📷 เปิดกล้อง</button>
-                <button className="predict-button" onClick={handlePredict}>🔍 วิเคราะห์รูปภาพ</button>
+
+            <div className="result-section">
+                <h3>🔍 ผลลัพธ์</h3>
+                <div className="result-box">
+                    {prediction ? (
+                        <p>ประเภทอาหาร: {prediction} <br /> FODMAP: {fodmap || "ไม่ระบุ"}</p>
+                    ) : "รอผลลัพธ์..."}
+                </div>
             </div>
-            {prediction && <div className="prediction-result">{prediction}</div>}
+
+            {image && <button className="predict-button" onClick={handlePredict}>🔍 วิเคราะห์</button>}
         </div>
     );
 }
