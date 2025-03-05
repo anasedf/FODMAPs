@@ -8,7 +8,6 @@
 
 body {
     font-family: "Poppins", sans-serif;
-    line-height: 1.6;
     display: flex;
     justify-content: center; /* จัดให้อยู่ตรงกลางแนวนอน */
     align-items: center; /* จัดให้อยู่ตรงกลางแนวตั้ง (ถ้าต้องการ) */
